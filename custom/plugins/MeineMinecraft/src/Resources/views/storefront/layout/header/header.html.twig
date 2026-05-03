@@ -1,0 +1,105 @@
+{% sw_extends '@Storefront/storefront/layout/header/header.html.twig' %}
+
+{% block layout_header %}
+<header class="my-header" id="my-header">
+
+    <div class="my-header__inner">
+
+        <!-- LOGO -->
+        <div class="my-header__logo">
+            {% block layout_header_logo %}
+                {{ parent() }}
+            {% endblock %}
+        </div>
+
+        <!-- NAVIGATION -->
+        <nav class="my-header__nav">
+            {% set navigationTree = null %}
+            {% if page.header.navigation.tree is defined %}
+                {% set navigationTree = page.header.navigation.tree %}
+            {% elseif header.navigation.tree is defined %}
+                {% set navigationTree = header.navigation.tree %}
+            {% elseif page.navigation.tree is defined %}
+                {% set navigationTree = page.navigation.tree %}
+            {% endif %}
+
+            <ul>
+                {% for treeItem in navigationTree %}
+                    {% set category = treeItem.category %}
+                    {% set name = category.translated.name %}
+                    
+                    <li class="{% if treeItem.children|length > 0 %}has-dropdown{% endif %}">
+                        <a href="{{ category_url(category) }}" title="{{ name }}">
+                            {{ name }}
+                            {% if treeItem.children|length > 0 %}
+                                <span class="arrow">▼</span>
+                            {% endif %}
+                        </a>
+
+                        {% if treeItem.children|length > 0 %}
+                            <ul class="dropdown-menu">
+                                {% for child in treeItem.children %}
+                                    {% set childCategory = child.category %}
+                                    <li>
+                                        <a href="{{ category_url(childCategory) }}" title="{{ childCategory.translated.name }}">
+                                            {{ childCategory.translated.name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% else %}
+                    {# Fallback if tree is empty or not found #}
+                    <li><a href="{{ path('frontend.home.page') }}">Home</a></li>
+                    <li><a href="{{ path('frontend.navigation.page', { navigationId: context.salesChannel.navigationCategoryId }) }}">Shop</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
+
+        <!-- ACTIONS -->
+        <div class="my-header__actions">
+
+            {# Language Switcher #}
+            <div class="my-header__language fs-3 text-white">
+                {% sw_include '@Storefront/storefront/layout/header/actions/language-widget.html.twig' %}
+            </div>
+
+            <!-- Account/Login -->
+            <div class="my-header__login">
+                {% block layout_header_actions_account %}
+                    {{ parent() }}
+                {% endblock %}
+            </div>
+
+            <!-- Basket -->
+            <div class="basket">
+                {% set offcanvasCartOptions = {
+                    autoFocus: true
+                } %}
+
+                <a class="header-cart-btn"
+                   href="{{ path('frontend.checkout.cart.page') }}"
+                   data-cart-widget="true"
+                   data-off-canvas-cart="true"
+                   data-off-canvas-cart-options="{{ offcanvasCartOptions|json_encode }}"
+                   title="{{ 'checkout.cartTitle'|trans|striptags }}">
+                    {% block layout_header_actions_cart %}
+                        {% sw_include '@Storefront/storefront/layout/header/actions/cart-widget.html.twig' %}
+                    {% endblock %}
+                </a>
+            </div>
+
+        </div>
+
+        <!-- BURGER -->
+        <div class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+    </div>
+
+</header>
+{% endblock %}

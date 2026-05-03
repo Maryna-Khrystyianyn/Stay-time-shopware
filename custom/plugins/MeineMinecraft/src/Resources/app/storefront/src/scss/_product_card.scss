@@ -1,0 +1,131 @@
+.product-box {
+  background: #ffffff !important;
+  border: 1px solid #e2e1e1 !important;
+  border-radius: 15px !important;
+  overflow: hidden !important;
+  transition: all 0.3s ease !important;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  max-width: 380px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+
+  .card {
+    background: transparent !important;
+    border: none !important;
+    height: 100%;
+  }
+
+  .card-body {
+    padding: 0 !important;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  // 1. Image Wrapper (at the top)
+  .product-image-wrapper {
+    padding: 25px 25px 0 25px !important; 
+    height: 300px !important; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 0;
+    background: transparent !important;
+
+    img {
+      display: block !important;
+      width: 100% !important;
+      border: 1px solid #f0f0f0 !important;
+      border-radius: 15px !important;
+      object-fit: cover !important;
+      transition: transform 0.4s ease !important;
+    }
+  }
+  .product-image {
+    max-height: 300px !important;
+}
+
+  // 2. Info area (Name, Price, Button)
+  .product-info {
+    padding: 0 25px 25px 25px !important; // Balanced side and bottom padding
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+    gap: 15px; // Increased gap for airiness
+  }
+
+  .product-name {
+    color: #525151 !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 1.5rem !important;
+    text-decoration: none !important;
+    line-height: 1.4;
+    margin-bottom: 5px;
+    
+    // Removed truncation so full name is visible
+    display: block !important;
+    overflow: visible !important;
+    height: auto !important;
+    
+    &:hover {
+      color: #f5b858 !important;
+    }
+  }
+
+  .product-price {
+    color: #27221f !important;
+    font-size: 1.75rem !important;
+    font-weight: 800 !important;
+    font-family: 'Outfit', sans-serif;
+    margin: 5px 0 !important;
+  }
+
+  .btn-buy {
+    background-color: #e2a747 !important;
+    border: none !important;
+    border-radius: 10px !important;
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    padding: 12px !important;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    transition: 0.3s !important;
+    width: 100%;
+    margin-top: auto;
+    
+    &:hover {
+      background-color: #27221f !important;
+      color: white !important;
+      transform: translateY(-2px);
+    }
+  }
+
+  // Hide empty/redundant sections
+  .product-description,
+  .product-price-tax-link,
+  .product-price-unit,
+  .product-rating,
+  .product-tax-info,
+  .product-cheapest-price,
+  .product-variant-characteristics {
+    display: none !important;
+  }
+
+  &:hover {
+    box-shadow: 0 0 15px rgba(25, 172, 25,0.9) !important;
+    
+    .product-image-wrapper img {
+      transform: scale(1.05) !important;
+    }
+  }
+}
+
+

@@ -1,0 +1,87 @@
+{% sw_extends '@Storefront/storefront/layout/footer/footer.html.twig' %}
+
+{% block layout_footer_inner_container %}
+    <div class="container py-5 my-custom-footer">
+        <div class="row custom-footer-row g-4">
+            
+            {# 1. Logo & Copyright #}
+            <div class="col-12 col-lg-4 custom-footer-col">
+                <div class="footer-logo mb-3">
+                    {% if theme_config('sw-logo-desktop') %}
+                        <a href="{{ path('frontend.home.page') }}">
+                            <img src="{{ theme_config('sw-logo-desktop') | sw_encode_url }}" alt="Logo" class="img-fluid" style="max-height: 80px;">
+                        </a>
+                    {% else %}
+                        <a href="{{ path('frontend.home.page') }}" class="h2 text-white text-decoration-none">StayTime</a>
+                    {% endif %}
+                </div>
+                <div class="footer-copyright-text mt-auto mb-0">
+                    &copy; StayTime. All rights reserved
+                </div>
+            </div>
+
+            {# 2. Links & Server Info #}
+            <div class="col-12 col-lg-4 custom-footer-col">
+                <ul class="footer-links-list list-unstyled mb-0">
+                    {% if footer.navigation and footer.navigation.tree %}
+                        {% for root in footer.navigation.tree %}
+                            <li class="mb-2">
+                                <a href="{{ root.category.seoUrl ?: category_url(root.category) }}" class="footer-link">
+                                    {{ root.category.translated.name }}
+                                </a>
+                            </li>
+                            {% for treeItem in root.children %}
+                                <li class="mb-2">
+                                    <a href="{{ treeItem.category.seoUrl ?: category_url(treeItem.category) }}" class="footer-link">
+                                        {{ treeItem.category.translated.name }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+                
+                <div class="footer-server-info">
+                    <p class="mb-1">Play hier - <strong class="text-white">staytime.b2t.world</strong></p>
+                    <p class="mb-0">Anarchy 1.16.5 - 1.21.5</p>
+                </div>
+
+                <ul class="footer-service-links-list list-unstyled mt-3 mb-0">
+                    {% if footer.serviceMenu|length > 0 %}
+                        {% for serviceMenuItem in footer.serviceMenu %}
+                            <li class="mb-2">
+                                <a href="{{ serviceMenuItem.seoUrl }}" class="footer-link">
+                                    {{ serviceMenuItem.translated.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+
+            {# 3. Support #}
+            <div class="col-12 col-lg-4 custom-footer-col">
+                <div class="footer-contact-hotline">
+                    <p class="mb-0">Support and counselling via:</p>
+                    <a href="https://t.me/Lixard7" target="_blank" rel="noopener noreferrer" class="telegram-support-link">
+                        <i class="ph ph-telegram-logo"></i> @Lixard7
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+
+        {# Directly embedded copyright bottom block #}
+        <div class="footer-bottom mt-5">
+            <div class="footer-copyright">
+                {% sw_icon 'shopware' style { size:'xs' } %}
+                {{ 'footer.copyrightInfo'|trans|sw_sanitize }}
+                &amp; <a href="https://github.com/Maryna-Khrystyianyn" target="_blank" rel="noopener noreferrer" class="creator-link">Maryna Khrystyianyn</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{# Explicitly disable default bottom footer to avoid duplicates or issues #}
+{% block layout_footer_bottom %}
+{% endblock %}

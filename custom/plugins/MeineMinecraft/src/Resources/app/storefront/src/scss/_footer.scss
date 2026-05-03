@@ -1,0 +1,97 @@
+.footer-main {
+    background-color: #27221f;
+    color: #a29f9c;
+    border-top: 1px solid rgba(162, 159, 156, 0.1);
+
+    .my-custom-footer {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+
+    .custom-footer-col {
+        display: flex;
+        flex-direction: column;
+        
+        @media (max-width: 991px) {
+            align-items: center;
+            text-align: center;
+            
+            .footer-links-list li,
+            .footer-server-info p, 
+            .footer-contact-hotline p {
+                text-align: center;
+            }
+        }
+    }
+
+    .footer-link {
+        color: #a29f9c;
+        text-decoration: none;
+        transition: color 0.3s;
+        font-size: 1.1rem;
+
+        &:hover {
+            color: #f5b858;
+        }
+    }
+
+    .telegram-support-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        color: #a29f9c;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+        font-size: 1.2rem;
+
+        i {
+            font-size: 1.5rem;
+            color: #2AABEE; 
+        }
+
+        &:hover {
+            color: #f5b858;
+        }
+    }
+
+    .footer-copyright-text {
+        font-size: 0.9rem;
+    }
+
+    .footer-server-info {
+        color: #a29f9c;
+        p {
+            font-size: 1.1rem;
+        }
+    }
+
+    .footer-bottom {
+        border-top: 1px solid rgba(162, 159, 156, 0.1);
+        color: #a29f9c;
+        padding: 20px 0;
+        background-color: #27221f;
+        
+        .footer-copyright {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            
+            .icon {
+                color: #a29f9c;
+            }
+            
+            .creator-link {
+                color: #a29f9c;
+                text-decoration: underline;
+                transition: color 0.3s;
+                
+                &:hover {
+                    color: #f5b858;
+                }
+            }
+        }
+    }
+}
