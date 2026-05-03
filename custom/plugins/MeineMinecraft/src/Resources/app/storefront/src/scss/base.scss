@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400&display=swap');
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+body {
+  padding-top: 80px;
+  background: #f5f5f5;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  &.is-active-route-frontend-home-page {
+    padding-top: 0;
+  }
+}
+
+.content-main, main {
+    flex: 1 0 auto;
+}
+
+.footer-main {
+    flex-shrink: 0;
+}
+
+// Full-width layout for the shop content
+#shop-content {
+  .container, 
+  .container-main {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 50px !important;
+    padding-right: 50px !important;
+  }
+}
+
+@import 'header';
+@import 'hero';
+@import 'product_card';
+@import 'products_listing';
+@import 'footer';

@@ -1,0 +1,1 @@
+window.addEventListener("pageshow",function(){let e=document.getElementById("my-header");if(!e)return;let n="/"===window.location.pathname||"/index.php"===window.location.pathname;e.classList.toggle("is-homepage",n)});

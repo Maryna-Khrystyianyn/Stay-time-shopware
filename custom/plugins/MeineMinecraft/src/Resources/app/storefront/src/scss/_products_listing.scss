@@ -1,0 +1,107 @@
+.product-listing-section {
+    padding: 60px 50px 40px 50px;
+    background: transparent;
+    
+    .section-header {
+        margin-bottom: 30px;
+        text-align: left;
+    }
+
+    .section-title {
+        color:black;
+        font-size: 2rem;
+        font-weight: 800;
+        position: relative;
+        margin-bottom: 20px;
+        text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+         &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 160px;
+      height: 4px;
+      background-color: #e2a747;
+      border-radius: 2px;}
+        
+    
+    }
+
+    .category-filter-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 25px;
+        
+        .filter-item {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.6rem;
+            padding: 10px 25px;
+            background: #e2a747;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            // Robust icon sizing
+            svg {
+                width: 24px;
+                height: 24px;
+                flex-shrink: 0;
+                display: block;
+            }
+
+            // Fallback for text/emoji icons
+            span, i {
+                font-size: 1.4rem;
+                line-height: 1;
+            }
+
+            // Handle potential wrapping from HTML editor
+            p, div {
+                margin: 0;
+                display: flex;
+                align-items: center;
+            }
+
+            &:hover {
+                color: #ffffff;
+                background:  rgb(25, 172, 25);
+                border-color: rgb(17, 158, 17);
+                transform: translateY(-1px);
+            }
+
+            &.active {
+              
+                background: rgb(25, 172, 25);
+                border-color: rgb(17, 158, 17);
+                box-shadow: 0 4px 15px rgba(245, 184, 88, 0.4);
+            }
+        }
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .product-listing-section {
+        padding: 40px 20px 30px 20px;
+        
+        .section-title {
+            font-size: 2rem;
+        }
+        
+        .category-filter-nav {
+            gap: 10px;
+            
+            .filter-item {
+                font-size: 0.95rem;
+                padding: 8px 18px;
+            }
+        }
+    }
+}

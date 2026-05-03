@@ -1,0 +1,276 @@
+.my-header {
+  position: fixed; 
+  padding: 10px 20px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #27221f;
+  z-index: 2000;
+  color: #a29f9c;
+  font-size: 1.5rem;
+  font-family: 'Minecraftia', sans-serif;
+  transition: background 0.3s ease;
+  // border: 5px solid red; // DEBUG: Remove after fixing
+
+  &.is-homepage {
+    background: rgba(39, 34, 31, 0.8);
+    backdrop-filter: blur(10px);
+  }
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 80px;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  &__language {
+    .top-bar-nav-btn,
+    .dropdown-toggle {
+      color: #a29f9c !important;
+      font-size: 1.5rem;
+
+      &:hover,
+      &:focus {
+        color: #f5b858 !important;
+      }
+    }
+
+    .language-flag {
+      height: 16px !important;
+      width: 20px !important;
+
+      // 🇷🇺 Russian flag
+      &.country-ru {
+        background-image: linear-gradient(to bottom, #fff 33%, #0039a6 33%, #0039a6 66%, #d52b1e 66%);
+      }
+    }
+
+    .dropdown-menu {
+      background: #27221f;
+      border-top: 3px solid #f5b858;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+
+      .dropdown-item {
+        color: #a29f9c;
+
+        &:hover,
+        &.active {
+          color: #fff;
+          background: rgba(245, 184, 88, 0.15);
+        }
+      }
+    }
+  }
+
+  &__login {
+    .header-actions-btn {
+      color: #cfcdca;
+      font-size: 1.2rem;
+      text-decoration: none;
+      
+      &:hover {
+        color: #f5b858;
+      }
+    }
+    .icon {
+      color: #bfc4c8; 
+      
+      & > svg {
+        fill: currentColor;
+      }
+    }
+  }
+
+  &__nav ul {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    margin-top: 20px;
+
+    li {
+      position: relative;
+      cursor: pointer;
+
+      a {
+        color: inherit;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 0;
+        height: 2px;
+        background: #f5b858;
+        transition: 0.3s;
+      }
+
+      &:hover {
+        &::after {
+          width: 100%;
+        }
+
+        .dropdown-menu {
+          display: block;
+        }
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: #27221f;
+        color: #a29f9c;
+        padding: 15px;
+        min-width: 180px;
+        list-style: none;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        border-top: 3px solid #f5b858;
+        z-index: 100;
+        margin-top: 5px;
+
+        li {
+          margin-bottom: 10px;
+          font-size: 1.2rem;
+
+          &::after {
+            display: none;
+          }
+
+          a {
+            white-space: nowrap;
+            &:hover {
+              color: white;
+            }
+          }
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.basket {
+  cursor: pointer;
+  background-color: rgba(167, 135, 66, 0.7);
+  border-radius: 10px;
+  width: 250px;
+  height: 65px;
+  transition: background-color 0.5s;
+
+  .header-cart-btn {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: white;
+    padding: 0 10px;
+  }
+  .header-cart-total {
+    font-size: 1.7rem;
+    font-weight: 900;
+    margin-left: 10px;
+    color: white;
+    text-align: center;
+  }
+  .basket-icon svg {
+    background-color: #e2a747;
+    padding: 3px;
+    border-radius: 5px;
+    width: 45px;
+    transition: 0.5s;
+  }
+
+  .prise {
+    padding-bottom: 5px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-family: 'Minecraftia', sans-serif;
+  }
+
+  .arrow {
+    background: none;
+    margin:7px 12px 0 12px;
+    font-size: 2.2rem;
+    font-weight: 900;
+  }
+
+  &:hover {
+    background-color: rgba(245, 184, 88, 0.8);
+
+    .basket-icon svg {
+      background-color: white;
+      color: #f5b858;
+    }
+  }
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+
+  span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .my-header {
+    &__nav {
+      display: none;
+    }
+    .basket {
+      width: auto;
+    }
+    .burger {
+      display: flex;
+    }
+  }
+}
+
+// Targeted hiding of default Shopware elements
+// We use opacity and height instead of display:none to avoid layout breaking or accidental hiding of 'my-header'
+.top-bar, 
+.header-top-bar,
+.breadcrumb-container,
+.cms-breadcrumb,
+.nav-main:not(.my-header__nav) {
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+// Reset body margin if any
+body {
+  margin: 0 !important;
+}
