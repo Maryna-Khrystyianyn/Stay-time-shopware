@@ -1,0 +1,13 @@
+{% sw_extends '@Storefront/storefront/component/buy-widget/buy-widget-form.html.twig' %}
+
+{% block buy_widget_buy_button %}
+    <div class="d-grid">
+        <button class="btn btn-add-to-cart btn-shop-primary"
+                type="submit"
+                title="{{ 'detail.addProduct'|trans|striptags }}"
+                aria-label="{{ 'detail.addProduct'|trans|striptags }}">
+            <i class="ph ph-shopping-cart-simple"></i>
+            {{ 'meine-minecraft.products.add-to-cart'|trans }}
+        </button>
+    </div>
+{% endblock %}

@@ -87,25 +87,8 @@
     margin: 5px 0 !important;
   }
 
-  .btn-buy {
-    background-color: #e2a747 !important;
-    border: none !important;
-    border-radius: 10px !important;
-    color: #ffffff !important;
-    font-weight: 900 !important;
-    padding: 12px !important;
-    text-transform: uppercase;
-    font-size: 1.5rem;
-    letter-spacing: 1px;
-    transition: 0.3s !important;
-    width: 100%;
-    margin-top: auto;
-    
-    &:hover {
-      background-color: #27221f !important;
-      color: white !important;
-      transform: translateY(-2px);
-    }
+  .btn-buy  {
+    @extend .btn-shop-primary;
   }
 
   // Hide empty/redundant sections
@@ -128,4 +111,36 @@
   }
 }
 
+// ─── Product Detail Page ────────────────────────────────────────────────────
 
+// "Add to cart" 
+.product-detail-form-container .btn-add-to-cart {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+
+  i {
+    font-size: 1.4rem;
+  }
+}
+
+// Inline description injected right after product number
+.product-detail-inline-description {
+  color: #757574;
+  font-size: 1rem;
+  line-height: 1.6;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 1rem;
+
+  p { margin-bottom: 0.5rem; }
+  p:last-child { margin-bottom: 0; }
+}
+
+.cms-element-product-name {
+  color: black;
+  font-size: 2rem;
+  font-weight: 800;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  margin: 35px 0 10px 10px !important;
+}

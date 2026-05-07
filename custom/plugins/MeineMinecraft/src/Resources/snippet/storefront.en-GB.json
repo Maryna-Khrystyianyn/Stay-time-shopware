@@ -8,6 +8,16 @@
         "categories": {
             "our-products": "Our Products",
             "all-products": "All Products"
+        },
+        "products": {
+            "add-to-cart": "Add to cart",
+            "buy-now": "Buy now"
         }
+    },
+    "checkout": {
+        "cartHeaderQuantity": "Quantity",
+        "subtotalAmount": "Subtotal",
+        "proceedToCheckout": "Go to checkout",
+        "proceedToCart": "Display shopping cart"
     }
 }

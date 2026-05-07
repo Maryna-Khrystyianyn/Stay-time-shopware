@@ -8,6 +8,16 @@
         "categories": {
             "our-products": "Наши продукты",
             "all-products": "Все продукты"
+        },
+        "products": {
+            "add-to-cart": "Купить",
+            "buy-now": "Купить"
         }
+    },
+    "checkout": {
+        "cartHeaderQuantity": "Количество",
+        "subtotalAmount": "Сумма",
+        "proceedToCheckout": "К оплате",
+        "proceedToCart": "Перейти в корзину"
     }
 }

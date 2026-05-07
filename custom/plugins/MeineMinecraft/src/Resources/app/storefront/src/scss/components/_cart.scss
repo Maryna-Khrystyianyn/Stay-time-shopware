@@ -1,0 +1,99 @@
+/* ─── Offcanvas Cart Redesign ────────────────────────────────────────────────── */
+
+// Enlarge the product image natively without breaking Shopware's layout grid
+.offcanvas-cart {
+
+  // Force image and title to be perfectly side by side
+  .line-item-info {
+    flex: 1; /* Was width: 100% which incorrectly pushed the remove button down */
+    max-width: calc(100% - 35px); /* Leave room for the remove button */
+    
+    > .line-item-row {
+      display: flex;
+      flex-wrap: nowrap !important;
+      align-items: center;
+      gap: 15px;
+    }
+  }
+
+  .line-item-info-img {
+    flex-shrink: 0;
+    padding: 0;
+
+    .line-item-img-container {
+      width: 90px;
+      height: 90px;
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 10px;
+      }
+    }
+  }
+
+  // Ensure title text looks a bit nicer
+  .line-item-details {
+    padding: 0;
+    flex-grow: 1;
+
+    .line-item-label {
+      color: #27221f;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+
+      &:hover {
+        color: #f5b858;
+      }
+    }
+  }
+
+  // Slightly pad the cart items for a cleaner look
+  .cart-item {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: none;
+  }
+
+  .line-item-remove {
+    .line-item-remove-button {
+      border: none !important;
+      background: transparent !important;
+      color: #e9626d !important; /* Red color */
+      margin-top: -15px !important;
+      
+
+      &:hover {
+        color: #b52a36 !important;
+        transform: scale(1.1);
+        background: transparent !important;
+      }
+    }
+  }
+
+  .line-item-img{
+    height: 90px !important;
+  }
+
+  .line-item-total-price, .line-item-tax-price {
+    justify-content: flex-end !important;
+    font-size: 1.2rem !important;
+  }
+
+  /* Make the subtotal larger */
+  .offcanvas-summary-list {
+    .summary-total {
+      font-size: 1.7rem !important;
+      font-weight: 800;
+      color: #27221f;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+

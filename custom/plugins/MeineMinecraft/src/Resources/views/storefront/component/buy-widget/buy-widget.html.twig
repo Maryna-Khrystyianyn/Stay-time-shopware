@@ -1,0 +1,15 @@
+{% sw_extends '@Storefront/storefront/component/buy-widget/buy-widget.html.twig' %}
+
+{# Remove "Prices incl. VAT plus shipping costs" line #}
+{% block buy_widget_tax %}{% endblock %}
+
+{# After the product number, inject the product description #}
+{% block buy_widget_ordernumber_container %}
+    {{ parent() }}
+
+    {% if product.translated.description %}
+        <div class="product-detail-inline-description mt-3">
+            {{ product.translated.description|raw }}
+        </div>
+    {% endif %}
+{% endblock %}

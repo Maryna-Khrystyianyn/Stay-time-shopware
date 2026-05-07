@@ -1,0 +1,10 @@
+{% sw_extends '@Storefront/storefront/component/checkout/offcanvas-cart-summary.html.twig' %}
+
+{# Remove shipping costs row #}
+{% block component_offcanvas_summary_content_info %}{% endblock %}
+
+{# Remove shipping configuration form #}
+{% block component_offcanvas_summary_content_shipping %}{% endblock %}
+
+{# Remove prices incl VAT text #}
+{% block component_offcanvas_summary_tax_info %}{% endblock %}
