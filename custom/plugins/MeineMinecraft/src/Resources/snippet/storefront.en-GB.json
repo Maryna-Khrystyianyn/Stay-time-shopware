@@ -12,12 +12,31 @@
         "products": {
             "add-to-cart": "Add to cart",
             "buy-now": "Buy now"
+        },
+        "checkout": {
+            "thanksInstruction": "Thank you for your order. For payment and product usage, please contact our sales manager on Telegram. Your order number will be displayed after confirmation.",
+            "identifierLabel": "Your Identifier",
+            "emailLabel": "Your email address",
+            "confirmButton": "Confirm",
+            "processing": "Processing...",
+            "finishInfoConfirmation": "Thank you for your order! Your request has been successfully received.",
+            "registerHeader": "Order Confirmation",
+            "cartHeader": "Shopping cart",
+            "orderNumberLabel": "Order Number",
+            "cartItemQuantity": "Quantity"
         }
     },
     "checkout": {
+        "registerHeader": "Order Confirmation",
+        "cartHeader": "Shopping cart",
+        "itemCounter": "{1} 1 item|[0,Inf[ %count% items",
+        "cartHeaderInfo": "Product",
         "cartHeaderQuantity": "Quantity",
+        "cartHeaderUnitPrice": "Unit price",
+        "cartHeaderTotalPrice": "Subtotal",
         "subtotalAmount": "Subtotal",
         "proceedToCheckout": "Go to checkout",
-        "proceedToCart": "Display shopping cart"
+        "proceedToCart": "Display shopping cart",
+        "cartItemQuantity": "Quantity"
     }
 }

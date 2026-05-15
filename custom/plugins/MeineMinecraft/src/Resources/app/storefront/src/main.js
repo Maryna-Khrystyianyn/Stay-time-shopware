@@ -7,9 +7,8 @@ function updateHeaderHomepageClass() {
     const header = document.getElementById('my-header');
     if (!header) return;
 
-    // Shopware home page is always exactly "/"
-    const isHome = window.location.pathname === '/'
-        || window.location.pathname === '/index.php'; // safety fallback
+    // Shopware adds 'is-act-home' class to body on the home page
+    const isHome = document.body.classList.contains('is-act-home');
 
     header.classList.toggle('is-homepage', isHome);
 }

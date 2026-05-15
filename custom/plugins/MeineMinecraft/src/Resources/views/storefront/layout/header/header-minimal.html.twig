@@ -1,0 +1,20 @@
+{% sw_extends '@Storefront/storefront/layout/header/header-minimal.html.twig' %}
+
+{% block layout_header_minimal_logo %}
+    {# Remove logo as requested #}
+{% endblock %}
+
+{% block layout_header_minimal_contact %}
+    {# Remove questions and phone block as requested #}
+{% endblock %}
+
+{% block layout_header_minimal_back_to_shop %}
+    <div class="header-minimal-back">
+        <a href="{{ path('frontend.home.page') }}"
+           class="header-minimal-back-link"
+           title="{{ "checkout.finishButtonBackToShop"|trans|striptags }}">
+            <i class="ph ph-arrow-left"></i>
+            {{ "checkout.finishButtonBackToShop"|trans }}
+        </a>
+    </div>
+{% endblock %}

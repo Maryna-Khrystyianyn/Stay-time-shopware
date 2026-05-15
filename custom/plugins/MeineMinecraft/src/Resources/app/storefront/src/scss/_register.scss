@@ -1,0 +1,212 @@
+// Reset body padding for checkout pages
+body.is-act-confirmpage,
+body.is-act-registerpage,
+body[class*="is-active-route-frontend-checkout-"] {
+  padding-top: 0 !important;
+
+  .header-minimal {
+    background-color: #27221f !important;
+    padding: 20px 0 !important;
+    border-bottom: 3px solid #f5b858 !important;
+
+    // Hide logo and contact info as requested
+    .header-minimal-logo,
+    .header-minimal-contact {
+      display: none !important;
+    }
+
+    .header-minimal-back-to-shop{
+      justify-content: flex-start !important;
+    }
+
+    .header-minimal-back {
+      display: flex;
+      justify-content: flex-start;
+      padding-left: 20px;
+    }
+
+    // Style the actual Shopware back-to-shop button class
+    .header-minimal-back-to-shop-button {
+      background-color: rgba(167, 135, 66, 0.7) !important;
+      border: none !important;
+      border-radius: 10px !important;
+      padding: 12px 25px !important;
+      color: white !important;
+      text-decoration: none !important;
+      font-weight: 700 !important;
+      font-size: 1.1rem !important;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.5s;
+      font-family: 'Minecraftia', sans-serif !important;
+
+      &:hover {
+        background-color: rgba(245, 184, 88, 0.8) !important;
+        color: white !important;
+        text-decoration: none !important;
+        transform: scale(1.02);
+      }
+    }
+  }
+
+  .checkout-container {
+    justify-content: center !important;
+  }
+}
+
+
+
+.checkout-register-page {
+  margin-top: 10px;
+  background: #f8f9fa;
+  min-height: 100vh;
+
+  .register-card {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    text-align: center;
+  }
+
+  .checkout{
+    padding-top: 0px !important;
+  }
+
+  .register-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #27221f;
+    margin-bottom: 20px;
+  }
+
+  .register-instruction {
+    font-size: 1.1rem;
+    color: #6c757d;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    
+    strong {
+      color: #27221f;
+    }
+  }
+
+  .telegram-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #0088cc;
+    text-decoration: none;
+    font-weight: 700;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .form-group {
+    text-align: left;
+    margin-bottom: 25px;
+
+    label {
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: block;
+      color: #27221f;
+    }
+
+    .form-control {
+      height: 55px;
+      border-radius: 10px;
+      border: 2px solid #eee;
+      padding: 0 20px;
+      font-size: 1.1rem;
+      transition: all 0.3s;
+
+      &:focus {
+        border-color: #f5b858;
+        box-shadow: none;
+      }
+    }
+  }
+
+  .order-number-box {
+    background: #fff9f0;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px dashed #f5b858;
+    margin-bottom: 30px;
+    font-family: 'Minecraftia', sans-serif;
+    font-size: 1.2rem;
+    color: #d48a1d;
+  }
+
+  .btn-confirm {
+    background: #f5b858;
+    color: white;
+    border: none;
+    height: 60px;
+    width: 100%;
+    border-radius: 15px;
+    font-size: 1.3rem;
+    font-weight: 800;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(245, 184, 88, 0.3);
+
+    &:hover {
+      background: #e2a747;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(245, 184, 88, 0.4);
+    }
+  }
+
+  .success-message {
+    display: none;
+    font-size: 1.5rem;
+    color: #28a745;
+    font-weight: 800;
+    margin-top: 20px;
+  }
+
+  // Fix for Total Summary block visibility
+  .order-total-summary {
+    .rounded {
+      background-color: #fdf6e3 !important;
+      border: 2px solid #f5b858 !important;
+      color: #27221f !important;
+      
+      span {
+        color: #27221f !important;
+      }
+      
+      .h2 {
+        color: #d48a1d !important;
+      }
+    }
+  }
+
+  // Fix for Cart Items overflow and layout
+  .checkout-items-list {
+    .border-bottom {
+      display: flex !important;
+      align-items: flex-start !important;
+      
+      .flex-grow-1 {
+        display: flex;
+        flex-direction: column;
+        
+        .fw-bold.text-dark {
+          font-size: 1rem !important;
+          margin-bottom: 4px;
+        }
+        
+        .text-muted.small {
+          margin-bottom: 8px;
+        }
+      }
+    }
+  }
+}

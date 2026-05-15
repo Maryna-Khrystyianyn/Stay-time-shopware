@@ -1,0 +1,164 @@
+{% sw_extends '@Storefront/storefront/page/checkout/confirm/index.html.twig' %}
+
+{% set headerMinimal = true %}
+
+{# Force minimal header #}
+{% block base_header %}
+    {% sw_include '@Storefront/storefront/layout/header/header-minimal.html.twig' %}
+{% endblock %}
+
+{# Remove sidebar #}
+{% block page_checkout_aside %}{% endblock %}
+
+{# Use our custom layout for the confirmation page too #}
+{% block base_content %}
+    <div class="checkout-register-page">
+        <div class="container">
+            <div class="row g-4">
+                
+                {# LEFT SIDE: Final Confirmation #}
+                <div class="col-lg-7">
+                    <div class="register-card h-100">
+                        <h1 class="register-title">{{ "meine-minecraft.checkout.registerHeader"|trans }}</h1>
+                        
+                        <div class="register-instruction">
+                            {{ "meine-minecraft.checkout.thanksInstruction"|trans }}
+                            <br><br>
+                            <a href="https://t.me/staytimeofficial" class="telegram-link" target="_blank">
+                                <i class="ph ph-telegram-logo"></i> @staytimeofficial
+                            </a>
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ "meine-minecraft.checkout.emailLabel"|trans }}</label>
+                            <input type="email" id="email" class="form-control" value="{{ context.customer.email }}" required>
+                            <div id="email-error" class="text-danger small mt-1" style="display: none;">
+                                {{ "error.VIOLATION::IS_BLANK_ERROR"|trans }}
+                            </div>
+                        </div>
+
+                        {# The real confirm form for Shopware #}
+                        <form id="confirmOrderForm" 
+                              action="{{ path('frontend.checkout.finish.order') }}" 
+                              method="post">
+                            
+                            {% block page_checkout_confirm_form_privacies %}
+                                {# Hidden fields for terms and conditions if required #}
+                                <input type="hidden" name="tos" value="1">
+                            {% endblock %}
+
+                            <button type="submit" class="btn btn-confirm" id="final-confirm-btn">
+                                {{ "meine-minecraft.checkout.confirmButton"|trans }}
+                            </button>
+                        </form>
+
+                        <div id="thank-you-msg" class="success-message" style="display: none;">
+                            <div class="mb-3">{{ "meine-minecraft.checkout.finishInfoConfirmation"|trans }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                {# RIGHT SIDE: Cart Summary #}
+                <div class="col-lg-5">
+                    <div class="register-card h-100 text-start" style="text-align: left;">
+                        <h3 class="mb-4 fw-bold">{{ "meine-minecraft.checkout.cartHeader"|trans }}</h3>
+                        
+                        <div class="order-total-summary mb-4">
+                            <div class="d-flex justify-content-between align-items-center p-3 rounded" style="background: #fdf6e3; border: 2px solid #f5b858; color: #27221f;">
+                                <span class="h4 mb-0 fw-bold">{{ "checkout.summaryTotalPrice"|trans }}:</span>
+                                <span class="h2 mb-0 fw-bold" style="color: #d48a1d;">
+                                    {{ page.cart.price.totalPrice|currency }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="checkout-items-list">
+                            {% for lineItem in page.cart.lineItems %}
+                                <div class="d-flex align-items-start mb-3 pb-3 border-bottom">
+                                    <div class="me-3" style="width: 70px; height: 70px; flex-shrink: 0;">
+                                        {% if lineItem.cover %}
+                                            <img src="{{ lineItem.cover.url }}" 
+                                                 class="img-fluid rounded" 
+                                                 style="object-fit: contain; width: 100%; height: 100%; background: #f8f9fa;"
+                                                 alt="{{ lineItem.label }}">
+                                        {% endif %}
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="fw-bold text-dark mb-1" style="font-size: 1rem; line-height: 1.2;">{{ lineItem.label }}</div>
+                                        <div class="text-muted small mb-1">{{ "meine-minecraft.checkout.cartItemQuantity"|trans }}: {{ lineItem.quantity }}</div>
+                                        <div class="fw-bold" style="font-size: 1rem; color: #27221f;">
+                                            {{ lineItem.price.totalPrice|currency }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('final-confirm-btn').addEventListener('click', function(e) {
+            e.preventDefault(); // Stop normal form submission
+            
+            const btn = this;
+            const emailInput = document.getElementById('email');
+            const emailError = document.getElementById('email-error');
+            const msg = document.getElementById('thank-you-msg');
+            const form = document.getElementById('confirmOrderForm');
+            const originalText = btn.innerHTML;
+            
+            if (!emailInput.value || !emailInput.checkValidity()) {
+                emailError.style.display = 'block';
+                emailInput.classList.add('is-invalid');
+                return;
+            } else {
+                emailError.style.display = 'none';
+                emailInput.classList.remove('is-invalid');
+            }
+
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> {{ "meine-minecraft.checkout.processing"|trans }}';
+            btn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('email', emailInput.value);
+
+            fetch('{{ path('frontend.checkout.fast-order') }}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    btn.style.display = 'none';
+                    form.style.display = 'none';
+                    emailInput.closest('.form-group').style.display = 'none';
+                    
+                    const orderNumDiv = document.createElement('div');
+                    orderNumDiv.className = 'order-number-box mt-3';
+                    orderNumDiv.style.display = 'block';
+                    orderNumDiv.innerHTML = '{{ "meine-minecraft.checkout.orderNumberLabel"|trans }}: <strong>' + data.orderNumber + '</strong>';
+                    msg.appendChild(orderNumDiv);
+                    
+                    msg.style.display = 'block';
+                } else {
+                    alert('Error: ' + data.error);
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Something went wrong. Please try again.');
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,7 +1,7 @@
 {% sw_extends '@Storefront/storefront/layout/header/header.html.twig' %}
 
 {% block layout_header %}
-<header class="my-header" id="my-header">
+<header class="my-header{% if activeRoute == 'frontend.home.page' %} is-homepage{% endif %}" id="my-header">
 
     <div class="my-header__inner">
 

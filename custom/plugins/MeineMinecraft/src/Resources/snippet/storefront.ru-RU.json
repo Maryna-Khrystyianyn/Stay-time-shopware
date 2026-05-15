@@ -12,12 +12,34 @@
         "products": {
             "add-to-cart": "Купить",
             "buy-now": "Купить"
+        },
+        "checkout": {
+            "thanksInstruction": "Благодарим за ваш заказ. Для оплаты и использования товаров обратитесь к менеджеру продаж в Telegram. Номер вашего заказа появится после подтверждения.",
+            "identifierLabel": "Ваш идентификатор",
+            "emailLabel": "Ваш e-mail адрес",
+            "confirmButton": "Подтвердить",
+            "processing": "Обработка...",
+            "finishInfoConfirmation": "Спасибо за ваш заказ! Ваша заявка успешно получена.",
+            "registerHeader": "Оформление заказа",
+            "cartHeader": "Корзина",
+            "orderNumberLabel": "Номер заказа",
+            "cartItemQuantity": "Количество"
         }
     },
     "checkout": {
+        "registerHeader": "Оформление заказа",
+        "cartHeader": "Корзина",
+        "itemCounter": "{1} 1 позиция|[2,4] %count% позиции|[0,1] %count% позиций|[5,Inf[ %count% позиций",
+        "cartHeaderInfo": "Товар",
         "cartHeaderQuantity": "Количество",
+        "cartHeaderUnitPrice": "Цена товара",
+        "cartHeaderTotalPrice": "Сумма",
         "subtotalAmount": "Сумма",
+        "summaryHeader": "Сумма",
+        "summaryTotalPrice": "Итого",
         "proceedToCheckout": "К оплате",
-        "proceedToCart": "Перейти в корзину"
+        "proceedToCart": "Перейти в корзину",
+        "proceedLink": "К оплате",
+        "cartItemQuantity": "Количество"
     }
 }

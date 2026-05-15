@@ -12,7 +12,9 @@
   transition: background 0.3s ease;
   // border: 5px solid red; // DEBUG: Remove after fixing
 
-  &.is-homepage {
+  // Use the body class provided by Shopware to detect the homepage
+  // This works across all languages without needing custom JS
+  body.is-act-home & {
     background: rgba(39, 34, 31, 0.8);
     backdrop-filter: blur(10px);
   }

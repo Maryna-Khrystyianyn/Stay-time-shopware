@@ -8,7 +8,10 @@ use Shopware\Core\Content\Category\SalesChannel\AbstractNavigationRoute;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
+use Shopware\Storefront\Page\Checkout\Address\CheckoutAddressPageLoadedEvent;
+use Shopware\Storefront\Page\Checkout\Register\CheckoutRegisterPageLoadedEvent;
 use Shopware\Storefront\Page\Navigation\NavigationPageLoadedEvent;
+use Shopware\Storefront\Page\PageLoadedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -29,10 +32,12 @@ class NavigationSubscriber implements EventSubscriberInterface
     {
         return [
             NavigationPageLoadedEvent::class => 'onPageLoaded',
+            CheckoutAddressPageLoadedEvent::class => 'onPageLoaded',
+            CheckoutRegisterPageLoadedEvent::class => 'onPageLoaded',
         ];
     }
 
-    public function onPageLoaded(NavigationPageLoadedEvent $event): void
+    public function onPageLoaded(PageLoadedEvent $event): void
     {
         $context = $event->getSalesChannelContext();
         $navigationId = $context->getSalesChannel()->getNavigationCategoryId();
@@ -63,6 +68,14 @@ class NavigationSubscriber implements EventSubscriberInterface
         if ($productsCategory) {
             $subCategories = $productsCategory->getChildren() ?: new CategoryCollection();
             $event->getPage()->addExtension('productsSubcategories', $subCategories);
+        }
+
+        // Ensure the header navigation tree is loaded for checkout pages
+        $page = $event->getPage();
+        if (method_exists($page, 'getHeader') && $page->getHeader() && !$page->getHeader()->getNavigation()) {
+            $navigation = new \Shopware\Storefront\Page\Header\HeaderNavigationEntity();
+            $navigation->setTree($categories);
+            $page->getHeader()->setNavigation($navigation);
         }
     }
 }
