@@ -1,0 +1,30 @@
+{% sw_extends '@Storefront/storefront/page/contact/index.html.twig' %}
+
+{% block page_contact_content %}
+    <div class="contact-page-content-wrapper mt-5">
+        <header class="section-header">
+            <h1 class="section-title">{{ "meine-minecraft.contact.header"|trans|sw_sanitize }}:</h1>
+        </header>
+
+        <div class="contact-info-card">
+            <p class="instruction-text">
+                {{ "meine-minecraft.contact.instruction"|trans|sw_sanitize }}
+            </p>
+
+            <div class="contact-links">
+                <a href="https://t.me/staytimeofficial" class="contact-item telegram" target="_blank">
+                    <i class="ph ph-telegram-logo"></i>
+                    <span>Telegram: @staytimeofficial</span>
+                </a>
+                
+                <a href="https://discord.gg/staytime" class="contact-item discord" target="_blank">
+                    <i class="ph ph-discord-logo"></i>
+                    <span>Discord: StayTime Official</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    {# Keep the original CMS content if any was added #}
+    {{ parent() }}
+{% endblock %}

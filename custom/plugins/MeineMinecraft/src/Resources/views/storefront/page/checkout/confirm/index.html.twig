@@ -37,6 +37,28 @@
                             </div>
                         </div>
 
+                        {# Checkboxes for rules and privacy policy #}
+                        <div class="agreement-checkboxes">
+                            <div class="form-check mb-2">
+                                <input type="checkbox" class="form-check-input" id="agree-rules" required>
+                                <label class="form-check-label" for="agree-rules">
+                                    {{ "meine-minecraft.checkout.agreeRules"|trans|raw }}
+                                </label>
+                                <div id="rules-error" class="checkbox-error text-danger small mt-1" style="display: none;">
+                                    {{ "meine-minecraft.checkout.checkboxRequired"|trans }}
+                                </div>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input type="checkbox" class="form-check-input" id="agree-privacy" required>
+                                <label class="form-check-label" for="agree-privacy">
+                                    {{ "meine-minecraft.checkout.agreePrivacy"|trans|raw }}
+                                </label>
+                                <div id="privacy-error" class="checkbox-error text-danger small mt-1" style="display: none;">
+                                    {{ "meine-minecraft.checkout.checkboxRequired"|trans }}
+                                </div>
+                            </div>
+                        </div>
+
                         {# The real confirm form for Shopware #}
                         <form id="confirmOrderForm" 
                               action="{{ path('frontend.checkout.finish.order') }}" 
@@ -107,18 +129,46 @@
             const btn = this;
             const emailInput = document.getElementById('email');
             const emailError = document.getElementById('email-error');
+            const agreeRules = document.getElementById('agree-rules');
+            const agreePrivacy = document.getElementById('agree-privacy');
+            const rulesError = document.getElementById('rules-error');
+            const privacyError = document.getElementById('privacy-error');
             const msg = document.getElementById('thank-you-msg');
             const form = document.getElementById('confirmOrderForm');
             const originalText = btn.innerHTML;
             
+            let hasError = false;
+
+            // Validate email
             if (!emailInput.value || !emailInput.checkValidity()) {
                 emailError.style.display = 'block';
                 emailInput.classList.add('is-invalid');
-                return;
+                hasError = true;
             } else {
                 emailError.style.display = 'none';
                 emailInput.classList.remove('is-invalid');
             }
+
+            // Validate checkboxes
+            if (!agreeRules.checked) {
+                rulesError.style.display = 'block';
+                agreeRules.classList.add('is-invalid');
+                hasError = true;
+            } else {
+                rulesError.style.display = 'none';
+                agreeRules.classList.remove('is-invalid');
+            }
+
+            if (!agreePrivacy.checked) {
+                privacyError.style.display = 'block';
+                agreePrivacy.classList.add('is-invalid');
+                hasError = true;
+            } else {
+                privacyError.style.display = 'none';
+                agreePrivacy.classList.remove('is-invalid');
+            }
+
+            if (hasError) return;
 
             btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> {{ "meine-minecraft.checkout.processing"|trans }}';
             btn.disabled = true;
@@ -139,6 +189,7 @@
                     btn.style.display = 'none';
                     form.style.display = 'none';
                     emailInput.closest('.form-group').style.display = 'none';
+                    document.querySelector('.agreement-checkboxes').style.display = 'none';
                     
                     const orderNumDiv = document.createElement('div');
                     orderNumDiv.className = 'order-number-box mt-3';
@@ -159,6 +210,16 @@
                 btn.disabled = false;
                 btn.innerHTML = originalText;
             });
+        });
+
+        // Clear checkbox errors on change
+        document.getElementById('agree-rules').addEventListener('change', function() {
+            this.classList.remove('is-invalid');
+            document.getElementById('rules-error').style.display = 'none';
+        });
+        document.getElementById('agree-privacy').addEventListener('change', function() {
+            this.classList.remove('is-invalid');
+            document.getElementById('privacy-error').style.display = 'none';
         });
     </script>
 {% endblock %}

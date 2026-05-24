@@ -2,30 +2,6 @@
     padding: 60px 50px 40px 50px;
     background: transparent;
     
-    .section-header {
-        margin-bottom: 30px;
-        text-align: left;
-    }
-
-    .section-title {
-        color:black;
-        font-size: 2rem;
-        font-weight: 800;
-        position: relative;
-        margin-bottom: 20px;
-        text-shadow: 0 4px 10px rgba(0,0,0,0.3);
-         &::after {
-      content: "";
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 160px;
-      height: 4px;
-      background-color: #e2a747;
-      border-radius: 2px;}
-        
-    
-    }
 
     .category-filter-nav {
         display: flex;

@@ -23,7 +23,18 @@
             "registerHeader": "Order Confirmation",
             "cartHeader": "Shopping cart",
             "orderNumberLabel": "Order Number",
-            "cartItemQuantity": "Quantity"
+            "cartItemQuantity": "Quantity",
+            "agreeRules": "I agree to the <a href=\"/Rules/\" target=\"_blank\">store rules</a>",
+            "agreePrivacy": "I agree to the <a href=\"/Privacy-Policy/\" target=\"_blank\">privacy policy</a>",
+            "checkboxRequired": "You must agree to continue"
+        },
+        "contact": {
+            "header": "Contact Us",
+            "instruction": "You can always contact the site managers and administrators via Telegram and Discord."
+        },
+        "rules": {
+            "header": "Purchase Rules",
+            "subtitle": "Welcome to our Minecraft Donat Store! Please read these rules carefully before making a purchase."
         }
     },
     "checkout": {

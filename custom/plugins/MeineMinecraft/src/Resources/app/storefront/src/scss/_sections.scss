@@ -1,0 +1,108 @@
+.section-header {
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.section-title {
+    color: black;
+    font-size: 2rem;
+    font-weight: 800;
+    position: relative;
+    margin-bottom: 30px;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 160px;
+        height: 4px;
+        background-color: #e2a747;
+        border-radius: 2px;
+        margin-top: 5px;
+    }
+}
+
+.section-subtitle {
+    font-size: 1.4rem;
+    color: #666;
+    margin-bottom: 40px;
+    max-width: 800px;
+    line-height: 1.5;
+}
+
+.contact-info-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.05);
+    margin-top: 20px;
+
+    .instruction-text {
+        font-size: 1.25rem;
+        color: #444;
+        line-height: 1.6;
+        margin-bottom: 30px;
+    }
+
+    .contact-links {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: #27221f;
+            font-weight: 600;
+            font-size: 1.2rem;
+            padding: 15px 25px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+
+            i {
+                font-size: 1.8rem;
+                color: #e2a747;
+            }
+
+            &:hover {
+                background: #ffffff;
+                border-color: #e2a747;
+                transform: translateX(5px);
+                box-shadow: 0 5px 15px rgba(226, 167, 71, 0.1);
+            }
+
+            &.telegram i { color: #229ED9; }
+            &.discord i { color: #5865F2; }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 1.75rem;
+        &::after {
+            width: 100px;
+        }
+    }
+    
+    .contact-info-card {
+        padding: 30px 20px;
+        .instruction-text {
+            font-size: 1.1rem;
+        }
+    }
+}
+
+// Rules page specific content styling
+.is-rules-page {
+    .cms-block ,.cms-block-container {
+        font-size: 20px !important;
+}
+}

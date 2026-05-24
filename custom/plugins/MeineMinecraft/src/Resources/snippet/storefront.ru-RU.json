@@ -23,7 +23,18 @@
             "registerHeader": "Оформление заказа",
             "cartHeader": "Корзина",
             "orderNumberLabel": "Номер заказа",
-            "cartItemQuantity": "Количество"
+            "cartItemQuantity": "Количество",
+            "agreeRules": "Я согласен с <a href=\"/Rules/\" target=\"_blank\">правилами магазина</a>",
+            "agreePrivacy": "Я согласен с <a href=\"/Privacy-Policy/\" target=\"_blank\">политикой конфиденциальности</a>",
+            "checkboxRequired": "Для продолжения необходимо ваше согласие"
+        },
+        "contact": {
+            "header": "Связаться с нами",
+            "instruction": "Вы всегда можете связаться с менеджерами и администраторами сайта в Telegram и Discord."
+        },
+        "rules": {
+            "header": "Правила покупки",
+            "subtitle": "Добро пожаловать в наш магазин доната Minecraft! Пожалуйста, внимательно прочитайте эти правила перед покупкой."
         }
     },
     "checkout": {
