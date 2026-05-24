@@ -1,0 +1,10 @@
+.git
+.idea
+.env.local
+.env.*.local
+var/cache/*
+var/log/*
+node_modules
+vendor
+media_files.tar.gz
+shopware_dump.sql

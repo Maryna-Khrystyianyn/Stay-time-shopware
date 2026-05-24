@@ -18,3 +18,6 @@
 /install.lock
 /public/asset-manifest.json
 ###< shopware/core ###
+
+/media_files.tar.gz
+
