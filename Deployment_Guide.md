@@ -25,21 +25,23 @@
 ```bash
 git clone git@gitlab.com:khrystyianyn/stay-time.git
 ```
+*У репозиторії вже містяться всі необхідні конфігураційні файли Docker (`Dockerfile`, `docker-compose.yml`, тощо).*
 
-### 2. Дамп бази даних
-Базу потрібно експортувати окремо (вона НЕ в Git):
-```bash
-mysqldump -u shopware -p shopware > shopware_dump.sql
-```
+### 2. Дамп бази даних (БЕЗ збереження в Git)
+> [!IMPORTANT]
+> З міркувань безпеки та оптимізації репозиторію, файл бази даних **`shopware_dump.sql`** виключено з Git (додано в `.gitignore`). Його потрібно передати людині, яка робить деплой, напряму (наприклад, через SFTP, Telegram або хмару).
+> 
+> Експортувати базу на розробницькій машині можна командою:
+> ```bash
+> mysqldump -u shopware -p shopware > shopware_dump.sql
+> ```
 
 ### 3. Медіа-файли
-Папка `public/media/` (~2.7MB) та `public/theme/` — не в Git. Заархівувати:
+Папка `public/media/` та стилі `public/theme/` — також ігноруються в Git. Їх потрібно передати архівом:
 ```bash
 tar -czf media_files.tar.gz public/media/ public/theme/ public/thumbnail/
 ```
 
-### 4. Docker-конфігурація
-Файли нижче потрібно створити і додати до репозиторію.
 
 ---
 
@@ -301,68 +303,90 @@ vendor
 
 ### Крок 1: Підготовка на ВАШІЙ машині (розробник)
 
-```bash
-# 1. Експорт бази даних
-mysqldump -u shopware -pshopware shopware > shopware_dump.sql
+1. **Експортувати базу даних** (згенерує локальний файл `shopware_dump.sql` в корені):
+   ```bash
+   mysqldump -u shopware -pshopware shopware > shopware_dump.sql
+   ```
+2. **Створити архів з медіа-файлами**:
+   ```bash
+   tar -czf media_files.tar.gz public/media/ public/theme/ public/thumbnail/
+   ```
+3. **Надіслати файли `shopware_dump.sql` та `media_files.tar.gz`** людині, яка буде робити деплой (напряму, НЕ через Git).
+4. **Закомітити та відправити всі Docker-файли у Git**:
+   ```bash
+   git add Dockerfile docker-compose.yml docker/ .dockerignore .gitignore
+   git commit -m "Add Docker deployment config"
+   git push
+   ```
 
-# 2. Архів медіа-файлів
-tar -czf media_files.tar.gz public/media/ public/theme/ public/thumbnail/
-
-# 3. Створити Docker-файли (як описано вище) і закомітити
-git add Dockerfile docker-compose.yml docker/ .dockerignore
-git commit -m "Add Docker deployment config"
-git push
-```
+---
 
 ### Крок 2: На СЕРВЕРІ (людина, яка деплоїть)
 
-```bash
-# 1. Клонувати репозиторій
-git clone git@gitlab.com:khrystyianyn/stay-time.git
-cd stay-time
+1. **Клонувати репозиторій**:
+   ```bash
+   git clone git@gitlab.com:khrystyianyn/stay-time.git
+   cd stay-time
+   ```
 
-# 2. Покласти дамп БД у корінь проєкту
-# (отримати shopware_dump.sql від розробника)
-cp /path/to/shopware_dump.sql ./shopware_dump.sql
+2. **Завантажити отримані файли `shopware_dump.sql` та `media_files.tar.gz`** та покласти їх безпосередньо в корінь папки `stay-time` на сервері.
+   *(Для копіювання на сервер можна використати SCP/SFTP або завантажити через файловий менеджер вашої панелі керування).*
 
-# 3. Створити .env файл для продакшну
-cat > .env << 'EOF'
-APP_ENV=prod
-APP_URL=https://your-domain.com
-APP_SECRET=ЗГЕНЕРУЙТЕ_НОВИЙ_СЕКРЕТ_ТУТ
-MYSQL_ROOT_PASSWORD=strong_root_password_here
-MAILER_DSN=smtp://user:pass@smtp.example.com:587
-EOF
+3. **Створити `.env` файл для продакшну** в корені проєкту:
+   ```bash
+   cat > .env << 'EOF'
+   APP_ENV=prod
+   APP_URL=https://your-domain.com
+   APP_SECRET=ЗГЕНЕРУЙТЕ_НОВИЙ_СЕКРЕТ_ТУТ
+   MYSQL_ROOT_PASSWORD=strong_root_password_here
+   MAILER_DSN=smtp://user:pass@smtp.example.com:587
+   EOF
+   ```
+   *(Замініть `your-domain.com`, `strong_root_password_here` та секрет на реальні дані).*
 
-# 4. Розпакувати медіа (якщо передані окремо)
-tar -xzf /path/to/media_files.tar.gz
+4. **Розпакувати архів з медіа-файлами**:
+   ```bash
+   tar -xzf media_files.tar.gz
+   ```
 
-# 5. Запустити Docker
-docker compose up -d --build
+5. **Запустити Docker-контейнери**:
+   ```bash
+   docker compose up -d --build
+   ```
+   *Завдяки конфігурації Docker, файл `shopware_dump.sql` буде автоматично імпортовано в базу даних MariaDB при першому старті контейнера db.*
 
-# 6. Дочекатись поки БД ініціалізується (перший раз ~1-2 хвилини)
-docker compose logs -f db  # Ctrl+C коли побачите "ready for connections"
+6. **Дочекатись ініціалізації бази даних** (триває ~1 хвилину):
+   ```bash
+   docker compose logs -f db
+   ```
+   *Натисніть `Ctrl+C` після того, як побачите повідомлення "ready for connections".*
 
-# 7. Виконати міграції та збірку всередині контейнера
-docker compose exec app bash -c "
-    bin/console system:install --basic-setup --force || true
-    bin/console database:migrate --all
-    bin/console plugin:refresh
-    bin/console plugin:install --activate MeineMinecraft
-    bin/console plugin:install --activate SwagPayPal || true
-    bin/console theme:compile
-    bin/console assets:install
-    bin/console cache:clear
-"
+7. **Виконати фінальні міграції та налаштування** всередині PHP контейнера:
+   ```bash
+   docker compose exec app bash -c "
+       bin/console system:install --basic-setup --force || true
+       bin/console database:migrate --all
+       bin/console plugin:refresh
+       bin/console plugin:install --activate MeineMinecraft
+       bin/console plugin:install --activate SwagPayPal || true
+       bin/console theme:compile
+       bin/console assets:install
+       bin/console cache:clear
+   "
+   ```
 
-# 8. Копіювати медіа-файли в Docker-том
-docker compose cp public/media/. staytime-app:/var/www/html/public/media/
-docker compose cp public/theme/. staytime-app:/var/www/html/public/theme/
-docker compose cp public/thumbnail/. staytime-app:/var/www/html/public/thumbnail/
+8. **Копіювати розпаковані медіа-файли в Docker-томи**:
+   ```bash
+   docker compose cp public/media/. staytime-app:/var/www/html/public/media/
+   docker compose cp public/theme/. staytime-app:/var/www/html/public/theme/
+   docker compose cp public/thumbnail/. staytime-app:/var/www/html/public/thumbnail/
+   ```
 
-# 9. Перевірити
-curl http://localhost:8000
-```
+9. **Перевірити роботу сайту** у браузері або через curl:
+   ```bash
+   curl -I http://localhost:8000
+   ```
+
 
 ### Крок 3: Налаштувати SSL (HTTPS)
 

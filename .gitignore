@@ -20,4 +20,5 @@
 ###< shopware/core ###
 
 /media_files.tar.gz
+/shopware_dump.sql
 
