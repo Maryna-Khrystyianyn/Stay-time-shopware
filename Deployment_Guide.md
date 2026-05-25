@@ -374,9 +374,9 @@ vendor
 
 8. **Копіювати розпаковані медіа-файли в Docker-томи**:
    ```bash
-   docker compose cp public/media/. staytime-app:/var/www/html/public/media/
-   docker compose cp public/theme/. staytime-app:/var/www/html/public/theme/
-   docker compose cp public/thumbnail/. staytime-app:/var/www/html/public/thumbnail/
+   docker cp public/media/. staytime-app:/var/www/html/public/media/
+   docker cp public/theme/. staytime-app:/var/www/html/public/theme/
+   docker cp public/thumbnail/. staytime-app:/var/www/html/public/thumbnail/
    ```
 
 9. **Перевірити роботу сайту** у браузері або через curl:
