@@ -8,3 +8,8 @@ node_modules
 vendor
 media_files.tar.gz
 shopware_dump.sql
+public/media/*
+public/theme/*
+public/thumbnail/*
+public/sitemap/*
+var/*
