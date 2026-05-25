@@ -108,14 +108,11 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
 # Робоча директорія
 WORKDIR /var/www/html
 
-# Копіюємо composer-файли окремо для кешування шарів
-COPY composer.json composer.lock ./
+# Копіюємо весь проєкт
+COPY . .
 
 # Встановлюємо залежності
 RUN composer install --no-dev --optimize-autoloader --no-scripts --no-interaction
-
-# Копіюємо весь проєкт
-COPY . .
 
 # Запускаємо composer scripts після копіювання файлів
 RUN composer run-script post-install-cmd --no-interaction || true
