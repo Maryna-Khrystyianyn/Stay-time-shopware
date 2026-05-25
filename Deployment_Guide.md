@@ -25,7 +25,7 @@
 ```bash
 git clone git@gitlab.com:khrystyianyn/stay-time.git
 ```
-*У репозиторії вже містяться всі необхідні конфігураційні файли Docker (`Dockerfile`, `docker-compose.yml`, тощо).*
+*У репозиторії вже містяться всі необхідні конфігураційні файли Docker (`Dockerfile`, `compose.yaml`, тощо).*
 
 ### 2. Дамп бази даних (БЕЗ збереження в Git)
 > [!IMPORTANT]
@@ -54,7 +54,7 @@ stay-time/
 │   ├── nginx.conf          # Конфігурація Nginx
 │   └── php.ini             # PHP налаштування
 ├── Dockerfile
-├── docker-compose.yml
+├── compose.yaml
 ├── .dockerignore
 ├── .env                    # (НЕ комітити — кожен сервер свій)
 └── ...
@@ -143,7 +143,7 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
 ---
 
-### Файл: `docker-compose.yml`
+### Файл: `compose.yaml`
 
 ```yaml
 services:
@@ -314,7 +314,7 @@ vendor
 3. **Надіслати файли `shopware_dump.sql` та `media_files.tar.gz`** людині, яка буде робити деплой (напряму, НЕ через Git).
 4. **Закомітити та відправити всі Docker-файли у Git**:
    ```bash
-   git add Dockerfile docker-compose.yml docker/ .dockerignore .gitignore
+   git add Dockerfile compose.yaml docker/ .dockerignore .gitignore
    git commit -m "Add Docker deployment config"
    git push
    ```
@@ -393,7 +393,7 @@ vendor
 > [!IMPORTANT]
 > Для продакшну обов'язково потрібен HTTPS. Найпростіший варіант — Caddy як reverse proxy.
 
-Додайте до `docker-compose.yml`:
+Додайте до `compose.yaml`:
 
 ```yaml
   caddy:

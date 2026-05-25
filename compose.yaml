@@ -1,53 +1,56 @@
-
 services:
-###> shopware/core ###
-  database:
-    image: mariadb:11.8
-    environment:
-      MARIADB_DATABASE: shopware
-      MARIADB_ROOT_PASSWORD: root
-      MARIADB_USER: shopware
-      MARIADB_PASSWORD: shopware
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: staytime-app
+    restart: unless-stopped
+    ports:
+      - "8000:80"
     volumes:
-      - db-data:/var/lib/mysql:rw
-    command:
-      - --sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
-      - --log_bin_trust_function_creators=1
-      - --binlog_cache_size=16M
-      - --key_buffer_size=0
-      - --join_buffer_size=1024M
-      - --innodb_log_file_size=128M
-      - --innodb_buffer_pool_size=1024M
-      - --innodb_buffer_pool_instances=1
-      - --group_concat_max_len=320000
-      - --default-time-zone=+00:00
-      - --max_binlog_size=512M
-      - --binlog_expire_logs_seconds=86400
-    healthcheck:
-      test: [ "CMD", "mariadb-admin" ,"ping", "-h", "localhost", "-proot" ]
-      start_period: 10s
-      start_interval: 3s
-      interval: 5s
-      timeout: 1s
-      retries: 10
-###< shopware/core ###
+      - media_data:/var/www/html/public/media
+      - theme_data:/var/www/html/public/theme
+      - thumbnail_data:/var/www/html/public/thumbnail
+      - files_data:/var/www/html/files
+    environment:
+      APP_ENV: prod
+      APP_URL: ${APP_URL:-http://localhost:8000}
+      APP_SECRET: ${APP_SECRET:-CHANGE_ME_TO_RANDOM_SECRET}
+      DATABASE_URL: mysql://shopware:shopware@db:3306/shopware
+      MAILER_DSN: ${MAILER_DSN:-null://null}
+      SHOPWARE_HTTP_CACHE_ENABLED: 1
+      SHOPWARE_HTTP_DEFAULT_TTL: 7200
+      BLUE_GREEN_DEPLOYMENT: 0
+      OPENSEARCH_URL: http://localhost:9200
+      SHOPWARE_ES_ENABLED: 0
+      LOCK_DSN: flock
+    depends_on:
+      db:
+        condition: service_healthy
 
-###> shopware/elasticsearch ###
-  opensearch:
-    image: opensearchproject/opensearch:2
-    volumes:
-      - opensearch-data:/usr/share/opensearch/data
+  db:
+    image: mariadb:10.11
+    container_name: staytime-db
+    restart: unless-stopped
     environment:
-      OPENSEARCH_INITIAL_ADMIN_PASSWORD: 'c3o_ZPHo!'
-      discovery.type: single-node
-      plugins.security.disabled: 'true'
-###< shopware/elasticsearch ###
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: shopware
+      MYSQL_USER: shopware
+      MYSQL_PASSWORD: shopware
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./shopware_dump.sql:/docker-entrypoint-initdb.d/dump.sql:ro
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-rootpassword}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
 volumes:
-###> shopware/core ###
-  db-data:
-###< shopware/core ###
-
-###> shopware/elasticsearch ###
-  opensearch-data:
-###< shopware/elasticsearch ###
+  db_data:
+  media_data:
+  theme_data:
+  thumbnail_data:
+  files_data:
