@@ -104,5 +104,13 @@
 .is-rules-page {
     .cms-block ,.cms-block-container {
         font-size: 20px !important;
+    }
 }
+
+// Hide duplicate titles from CMS block on special pages
+.is-privacy-page, .is-rules-page {
+    .cms-element-text h1:first-child {
+        display: none !important;
+    }
 }
+

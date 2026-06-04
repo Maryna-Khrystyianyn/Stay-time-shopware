@@ -1,7 +1,7 @@
 {
     "meine-minecraft": {
         "hero": {
-            "subtitle": "StayTime is not just a skyblock, but a whole universe of possibilities",
+            "subtitle": "StayTime is not just an anarchy, it's a whole universe of possibilities",
             "shop-now": "Shop NOW!",
             "play-here": "Play here - "
         },
@@ -35,6 +35,14 @@
         "rules": {
             "header": "Purchase Rules",
             "subtitle": "Welcome to our Minecraft Donat Store! Please read these rules carefully before making a purchase."
+        },
+        "privacy": {
+            "header": "Privacy Policy"
+        },
+        "footer": {
+            "copyright": "© 2026 StayTime — All rights reserved. StayTime is not affiliated with MojangAB, all funds go to the development of the project.",
+            "play-here": "Play here",
+            "support": "Support and counselling via"
         }
     },
     "checkout": {
@@ -48,6 +56,7 @@
         "subtotalAmount": "Subtotal",
         "proceedToCheckout": "Go to checkout",
         "proceedToCart": "Display shopping cart",
-        "cartItemQuantity": "Quantity"
+        "cartItemQuantity": "Quantity",
+        "emptyCart": "Your shopping cart is empty."
     }
 }

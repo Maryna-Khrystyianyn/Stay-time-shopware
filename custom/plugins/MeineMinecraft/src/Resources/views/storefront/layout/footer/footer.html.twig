@@ -16,7 +16,7 @@
                     {% endif %}
                 </div>
                 <div class="footer-copyright-text mt-auto mb-0">
-                    &copy; StayTime. All rights reserved
+                    {{ "meine-minecraft.footer.copyright"|trans|sw_sanitize }}
                 </div>
             </div>
 
@@ -42,7 +42,7 @@
                 </ul>
                 
                 <div class="footer-server-info">
-                    <p class="mb-1">Play hier - <strong class="text-white">staytime.b2t.world</strong></p>
+                    <p class="mb-1">{{ "meine-minecraft.footer.play-here"|trans|sw_sanitize }} - <strong class="text-white">play.staytime.fun</strong></p>
                     <p class="mb-0">Anarchy 1.16.5 - 1.21.*</p>
                 </div>
 
@@ -62,7 +62,7 @@
             {# 3. Support #}
             <div class="col-12 col-lg-4 custom-footer-col">
                 <div class="footer-contact-hotline">
-                    <p class="mb-0">Support and counselling via:</p>
+                    <p class="mb-0">{{ "meine-minecraft.footer.support"|trans|sw_sanitize }}:</p>
                     <a href="https://t.me/staytimeofficial" target="_blank" rel="noopener noreferrer" class="telegram-support-link">
                         <i class="ph ph-telegram-logo"></i> @staytimeofficial
                     </a>

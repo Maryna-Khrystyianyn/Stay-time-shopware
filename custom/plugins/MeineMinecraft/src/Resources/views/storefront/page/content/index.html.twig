@@ -7,7 +7,7 @@
             <div class="hero-content">
                 <h1 class="hero-title">StayTime</h1>
                 <p class="hero-subtitle">{{ "meine-minecraft.hero.subtitle"|trans|sw_sanitize }}</p>
-                <p class="hero-link">{{ "meine-minecraft.hero.play-here"|trans|sw_sanitize }} staytime.b2t.world</p>
+                <p class="hero-link">{{ "meine-minecraft.hero.play-here"|trans|sw_sanitize }} play.staytime.fun</p>
                 
                 <div class="scroll-down-wrapper">
                     <a class="hero-btn" id="hero-scroll-btn" href="#shop-content">
@@ -23,9 +23,10 @@
 
     {% set isContactPage = (activeRoute == 'frontend.contact.page') or (shopware.navigation.id == '019d86db8c0d78e6956d15e7b7e4f926') %}
     {% set isRulesPage = (shopware.navigation.id == '019d86db4e0a7fa1befac43a4a8d39b2') %}
+    {% set isPrivacyPage = (shopware.navigation.id == '019dd37778c171898410e8cf58900a54') %}
 
     {# Custom Headers for Special Pages #}
-    {% if isContactPage or isRulesPage %}
+    {% if isContactPage or isRulesPage or isPrivacyPage %}
         <div class="container mt-5">
             <header class="section-header">
                 {% if isContactPage %}
@@ -33,6 +34,8 @@
                 {% elseif isRulesPage %}
                     <h1 class="section-title">{{ "meine-minecraft.rules.header"|trans|sw_sanitize }}:</h1>
                     <p class="section-subtitle">{{ "meine-minecraft.rules.subtitle"|trans|sw_sanitize }}</p>
+                {% elseif isPrivacyPage %}
+                    <h1 class="section-title">{{ "meine-minecraft.privacy.header"|trans|sw_sanitize }}:</h1>
                 {% endif %}
             </header>
 
@@ -48,7 +51,7 @@
                             <span>Telegram: @staytimeofficial</span>
                         </a>
                         
-                        <a href="https://discord.gg/staytime" class="contact-item discord" target="_blank">
+                        <a href="https://discord.gg/BBGwNUZszP" class="contact-item discord" target="_blank">
                             <i class="ph ph-discord-logo"></i>
                             <span>Discord: StayTime Official</span>
                         </a>
@@ -58,7 +61,7 @@
         </div>
     {% endif %}
 
-    <div id="shop-content" class="{% if isRulesPage %}is-rules-page{% endif %}">
+    <div id="shop-content" class="{% if isRulesPage %}is-rules-page{% endif %} {% if isPrivacyPage %}is-privacy-page{% endif %}">
         <!-- Add Phosphor Icons -->
         <script src="https://unpkg.com/@phosphor-icons/web"></script>
         
