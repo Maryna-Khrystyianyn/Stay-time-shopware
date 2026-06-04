@@ -12,20 +12,27 @@ services:
       - theme_data:/var/www/html/public/theme
       - thumbnail_data:/var/www/html/public/thumbnail
       - files_data:/var/www/html/files
+      - ./.env:/var/www/html/.env
     environment:
-      APP_ENV: prod
-      APP_URL: ${APP_URL:-http://localhost:8000}
-      APP_SECRET: ${APP_SECRET:-CHANGE_ME_TO_RANDOM_SECRET}
-      DATABASE_URL: mysql://shopware:shopware@db:3306/shopware
-      MAILER_DSN: ${MAILER_DSN:-null://null}
-      SHOPWARE_HTTP_CACHE_ENABLED: 1
-      SHOPWARE_HTTP_DEFAULT_TTL: 7200
-      BLUE_GREEN_DEPLOYMENT: 0
-      OPENSEARCH_URL: http://localhost:9200
-      SHOPWARE_ES_ENABLED: 0
-      LOCK_DSN: flock
+        APP_ENV: prod
+        APP_URL: https://staytime.fun
+        APP_SECRET: ${APP_SECRET:-CHANGE_ME_TO_RANDOM_SECRET}
+        DATABASE_URL: mysql://shopware:shopware@db:3306/shopware
+        MAILER_DSN: ${MAILER_DSN:-null://null}
+        SHOPWARE_HTTP_CACHE_ENABLED: 1
+        SHOPWARE_HTTP_DEFAULT_TTL: 7200
+        BLUE_GREEN_DEPLOYMENT: 0
+        OPENSEARCH_URL: http://localhost:9200
+        SHOPWARE_ES_ENABLED: 0
+        LOCK_DSN: flock
+        TRUSTED_PROXIES: "127.0.0.1,172.16.0.0/12,172.19.0.0/16"
+        TRUSTED_HOSTS: ".*"
+        REDIS_URL: redis://staytime-redis:6379
+        SHOPWARE_CACHE_ADAPTER: redis
     depends_on:
       db:
+        condition: service_healthy
+      redis:             # ← добавить
         condition: service_healthy
 
   db:
@@ -47,6 +54,17 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+  redis:
+    image: redis:7-alpine
+    container_name: staytime-redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
 volumes:
   db_data:
@@ -54,3 +72,4 @@ volumes:
   theme_data:
   thumbnail_data:
   files_data:
+  redis_data:

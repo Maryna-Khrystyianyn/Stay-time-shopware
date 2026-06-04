@@ -29,9 +29,11 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
         curl \
         dom \
         xml
+        
+RUN pecl install redis && docker-php-ext-enable redis
 
 # Composer
-COPY --from=composer:2 /usr/local/bin/composer /usr/local/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 # Node.js (для збірки storefront)
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
