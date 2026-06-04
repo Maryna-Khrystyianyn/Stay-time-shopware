@@ -1,0 +1,6 @@
+framework:
+    trusted_proxies: '127.0.0.1,172.16.0.0/12,172.19.0.0/16'
+    trusted_headers:
+        - 'x-forwarded-for'
+        - 'x-forwarded-proto'
+        - 'x-forwarded-host'
